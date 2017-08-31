@@ -20,8 +20,13 @@ train["avg_sqrt"] = np.sqrt(train["avg"])
 # without GridSearchCV 
 # f1_score, mcc error, oob score for classification
 # param tuning of alg based on their f1score, mcc error, oob score
-
-# Testing grid for f1 score random forest
+######## 
+# The MCC is in essence a correlation coefficient value between -1 and +1. 
+# A coefficient of +1 represents a perfect prediction,0 an average random prediction and -1 an inverse prediction. 
+######## 
+# The F1 score can be interpreted as a weighted average of the precision and recall, where an F1 score reaches its 
+# best value at 1 and worst score at 0. 
+### Testing grid for f1 score random forest
 x_train, x_test, y_train, y_test = train_test_split(train[predictors],
                                                     train["Made Donation in March 2007"],
                                                     test_size = 0.33,
