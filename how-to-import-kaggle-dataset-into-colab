@@ -1,0 +1,23 @@
+###### **how to import kaggle dataset into google colab** ######
+
+step1) on kaggle.com go to myaccount
+clic on create new api token
+download token(kaggle.json)
+
+step2) open google colab at https://colab.research.google.com
+`from google.colab import files`
+`files.upload()`
+upload token(kaggle.json)
+
+step3) run following commands on colab cell
+!pip install -q kaggle
+!mkdir -p ~/.kaggle
+!cp kaggle.json ~/.kaggle/
+!chmod 600 /root/.kaggle/kaggle.json
+!kaggle datasets list
+
+step4) copy dataset link from kaggle competition data page
+run it in colab 
+!kaggle competitions download -c <COMPETITION NAME>
+
+step5) enjoy.........
