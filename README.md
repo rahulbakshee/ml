@@ -26,6 +26,6 @@ Regularization works well when we have a lot of slightly useful features.
 
 3. **Precison vs Recall**
 
-4. [classification-optimization](https://github.com/rahulbakshee/ml/blob/master/hyperparameter-optimization-classification.py)
+4. classification-optimization [code](https://github.com/rahulbakshee/ml/blob/master/hyperparameter-optimization-classification.py)
 
-5. [regression-optimizatio]()
+5. regression-optimizatio [code]()
