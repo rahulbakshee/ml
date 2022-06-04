@@ -103,18 +103,26 @@ def objective(trial):
         
     elif classifier_name == "Catboost":
         params = {
-#                     "objective": trial.suggest_categorical("objective", ["Logloss", "CrossEntropy"]),
-                     "learning_rate": trial.suggest_float("learning_rate", 1e-4, 1.0, log=True),
-                    "colsample_bylevel": trial.suggest_float("colsample_bylevel", 0.01, 0.1),
-                    "depth": trial.suggest_int("depth", 2, 12),
-                    "boosting_type": trial.suggest_categorical("boosting_type", ["Ordered", "Plain"]),
-                    "bootstrap_type": trial.suggest_categorical("bootstrap_type", ["Bayesian", "Bernoulli", "MVS"]),
-                    'od_wait':trial.suggest_int('od_wait', 500, 2300),
-                    'loss_function': 'MultiClass',
-                    #'task_type':"GPU",
-                    'eval_metric':"Accuracy",#'MultiClass',
-                    'leaf_estimation_method':'Newton',
-                    "random_seed":seed
+        # "learning_rate": defined by loss function automatically trial.suggest_float("learning_rate", 1e-4, 1.0, log=True),
+        # "colsample_bylevel": only CPU supported trial.suggest_float("colsample_bylevel", 0.01, 0.1), 
+        # "boosting_type": trial.suggest_categorical("boosting_type", ["Ordered", "Plain"]), only PLAIN is GPU supported
+        #'eval_metric': "MultiClass", #"Accuracy",#'',
+        # 'loss_function': 'MultiClass',
+
+        "loss_function": trial.suggest_categorical("objective", ["Logloss", "CrossEntropy"]),
+        'eval_metric' : "F1",
+        "n_estimators": 2, #trial.suggest_int('n_estimators', 1000, 5000, 500), # 1000 default, #
+        "depth": trial.suggest_int("depth", 4, 10),
+        "l2_leaf_reg": trial.suggest_int("l2_leaf_reg", 1, 10),
+        "bootstrap_type": trial.suggest_categorical("bootstrap_type", ["Bayesian", "Bernoulli",  "Poisson"]), #"MVS" only CPU support
+        "random_strength" : trial.suggest_int("random_strength", 0,1),
+        'od_wait':trial.suggest_int('od_wait', 500, 2300),
+        "border_count": trial.suggest_int("border_count", 128, 254),
+        "min_data_in_leaf" : trial.suggest_int("min_data_in_leaf", 1, 10), 
+        "random_seed":seed,
+        "verbose": True,
+        'task_type':"GPU",
+        'devices': '0:1',
                     }
         
         if params["bootstrap_type"] == "Bayesian":
